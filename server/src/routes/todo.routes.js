@@ -1,6 +1,8 @@
 const router = require('express').Router();
+const os = require('os');
 
 router.get('/todos', (req, res) => {
+    res.setHeader('hostname', os.hostname());
     const db = require('../db').getDb();
     db
     .collection('todos')

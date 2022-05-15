@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "8000:80"
+    depends_on:
+      - todos-server
+  mongodb:
+    image: 'mongo:4.4'
+    volumes:
+      - ./db/data:/data/db
+  todos-server:
+    build: ./server
+    env_file:
+      - ./server/.env
+    volumes:
+      - ./server:/app:ro
+      - /app/node_modules
+    depends_on:
+      - mongodb
